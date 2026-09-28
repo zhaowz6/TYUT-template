@@ -1,0 +1,249 @@
+% ===========================================================================
+%  本科毕业论文 LaTeX 模板
+%  编译方式：pdflatex -> bibtex -> pdflatex -> pdflatex
+%  或直接使用 latexmk -pdf main.tex
+%
+%  目录结构：
+%    main.tex            主控文件（页面、字体、标题、页码、目录样式）
+%    chapters/           正文章节
+%      introduction.tex      第 1 章  绪论
+%      related_work.tex      第 2 章  相关理论与技术基础
+%      method.tex            第 3 章  方法设计
+%      experiment.tex        第 4 章  实验与结果分析
+%      conclusion.tex        第 5 章  总结与展望
+%    images/             插图（png/eps/jpg 均可）
+%    references.bib      参考文献数据库
+%    cover.pdf           封面（学校统一格式，2 页）
+%
+%  使用前请确认：已在 cover.pdf 中替换为自己的姓名、学号、专业与题目。
+% ===========================================================================
+
+\documentclass[12pt,a4paper,UTF8]{ctexart}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
+
+\usepackage[
+colorlinks=true,
+linkcolor=black,
+citecolor=black,
+bookmarks=false
+]{hyperref}
+
+\usepackage{booktabs}
+\usepackage{pdfpages}
+\usepackage[nottoc]{tocbibind}
+\usepackage{tocloft}
+
+% ===== 各级目录添加虚线 =====
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+
+% ===== 目录整体居中配置 =====
+\renewcommand{\cfttoctitlefont}{\hfil\bfseries\fontsize{15}{18}\selectfont}
+\renewcommand{\cftaftertoctitle}{\hfil}
+\newlength{\tocwidth}
+\setlength{\tocwidth}{20cm} % 目录内容总宽度，按需微调
+
+\usepackage{multirow}
+\usepackage{geometry}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+
+\hbadness=10000
+\hfuzz=5pt
+
+\geometry{
+a4paper,
+top=3.3cm,
+bottom=2.3cm,
+left=2.8cm,
+right=2.3cm
+}
+
+\usepackage{chngcntr}
+
+\usepackage{setspace}
+\linespread{1.5}
+
+\usepackage{caption}
+\captionsetup[figure]{labelsep=space}
+\captionsetup[table]{labelsep=space}
+
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+\usepackage{newtxtext,newtxmath}
+
+\CJKfamily{song}
+\fontsize{12}{18}\selectfont
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+{\centering\bfseries\fontsize{15}{18}\selectfont}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\bfseries\fontsize{14}{16.8}\selectfont}
+{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+{\bfseries\fontsize{12}{14.4}\selectfont}
+{\thesubsubsection}{1em}{}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\cfoot{\fontsize{9}{10.8}\selectfont \thepage}
+\setlength{\footskip}{10mm}
+
+% 重定义目录：标题居中+内容块居中
+\makeatletter
+\renewcommand{\tableofcontents}{%
+\section*{\contentsname}
+\@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}
+\centering
+\begin{minipage}{\tocwidth}
+    \@starttoc{toc}
+\end{minipage}
+}
+\makeatother
+
+\title{【论文中文题目】}
+\author{【作者姓名】}
+\date{\today}
+\begin{document}
+
+% ----------------【封面：两页彻底无页码】----------------
+\cleardoublepage
+\pagestyle{empty}
+\includepdf[
+pages=1-2,
+pagecommand={\pagestyle{empty}},
+fitpaper
+]{cover.pdf}
+\cleardoublepage
+\pagestyle{fancy}
+
+% ---------------- 任务书（学校统一格式，按需插入）----------------
+% 如需插入任务书，取消下行注释，并把 task.pdf 放到本目录下：
+% \clearpage
+% \pagestyle{empty}
+% \pagenumbering{gobble}
+% \includepdf[pages=1-3]{task.pdf}
+
+% ---------------- 中文摘要 i：标题在上，摘要二字在标题下面 ----------------
+\newpage
+\pagestyle{fancy}
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\begin{center}
+\bfseries
+\fontsize{16}{19.2}\selectfont
+【论文中文题目】
+\end{center}
+
+\vspace{0.1em}
+\section*{摘\quad 要}
+\addcontentsline{toc}{section}{摘\quad 要}
+
+\vspace{0.5em}
+【中文摘要】此处填写论文中文摘要，建议篇幅 300$\sim$500 字。摘要应能独立成篇，一般依次包含以下四部分内容：（1）研究背景与意义；（2）采用的方法与技术路线；（3）完成的主要工作与创新点；（4）实验结果与结论。摘要中不宜出现图表、公式与参考文献标注。
+
+\vspace{1em}
+{\bfseries 关键词：}
+关键词一；关键词二；关键词三；关键词四；关键词五
+
+% ---------------- 英文摘要 ii：英文题目在上，Abstract在题目下方 ----------------
+\newpage
+
+\begin{center}
+\bfseries
+\fontsize{16}{19.2}\selectfont
+[Title of Thesis in English]
+\end{center}
+
+\vspace{1em}
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+\vspace{0.5em}
+[Abstract] Write the English abstract here; 300--500 words is recommended. It should be self-contained and cover: (1) research background and significance; (2) the proposed method and technical route; (3) main contributions; (4) experimental results and conclusions. Figures, tables, equations and citation marks should not appear in the abstract.
+
+\vspace{1em}
+{\bfseries Key words:}
+Keyword 1; Keyword 2; Keyword 3; Keyword 4; Keyword 5
+
+% ---------------- 目录无页码 ----------------
+\newpage
+\pagenumbering{gobble}
+\pagestyle{empty}
+\tableofcontents
+
+% ---------------- 正文从阿拉伯1开始 ----------------
+\newpage
+\pagestyle{fancy}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/introduction}
+
+\clearpage
+\input{chapters/related_work}
+
+\clearpage
+\input{chapters/method}
+
+\clearpage
+\input{chapters/experiment}
+
+\clearpage
+\input{chapters/conclusion}
+
+\clearpage
+
+% ---------------- 参考文献 ----------------
+\clearpage
+\begin{fontsize}{10.5}{12.6}\selectfont
+\sloppy
+\bibliographystyle{unsrt}
+\bibliography{references}
+\fussy
+\end{fontsize}
+
+% ---------------- 致谢 ----------------
+\clearpage
+\section*{致\quad 谢}
+\addcontentsline{toc}{section}{致\quad 谢}
+
+【致谢正文】在此向指导教师、学院老师、同窗与家人表达感谢。一般依次感谢：指导教师在选题、研究思路与论文撰写过程中的具体指导；学院与实验室提供的条件支持；同学间的讨论与帮助；家人的理解与支持。落笔宜真诚具体，避免空泛套话。
+
+
+% ---------------- 附件（无页码，载入完整 PDF 的所有页面）----------------
+% 附件通常包括：外文文献翻译、文献复印件、程序清单、原始数据等。
+% 请把附件 PDF 放到本目录下，并把文件名替换到下面的 \includepdf 中。
+% 若暂时没有附件，保持以下两行注释即可，不影响编译。
+%
+% \clearpage
+% \pagestyle{empty}
+% \pagenumbering{gobble}
+% \includepdf[pages=-]{appendix-translation.pdf}   % 外文翻译
+% \includepdf[pages=-]{appendix-paper.pdf}         % 文献复印件
+
+
+\end{document}

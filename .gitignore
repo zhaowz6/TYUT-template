@@ -1,0 +1,41 @@
+# ---- LaTeX 中间产物 ----
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.lol
+*.brf
+*.idx
+*.ilg
+*.ind
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.bcf
+*.run.xml
+pdflatex*.fls
+
+# ---- 编辑器与系统文件 ----
+.vscode/
+.idea/
+.workbuddy/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# ---- 原作者私有材料，请勿提交 ----
+_originals-backup/
+main_org.pdf
+task.pdf
+mmgl.pdf
+translate.pdf
+*_AIGC*.pdf
